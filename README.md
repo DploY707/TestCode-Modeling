@@ -2,7 +2,7 @@
 Project for [testCode-Modeling] software
 
 # How to install this project
-1. $ cd [src_root directory of this project]
+1. $ cd [root directory of this project]
 2. $ docker build -t tcm ./
 
 <!--
