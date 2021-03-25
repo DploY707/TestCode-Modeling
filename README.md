@@ -1,4 +1,4 @@
-# testCode-Modeling
+# TestCode-Modeling
 Project for [testCode-Modeling] software
 
 # How to install this project
