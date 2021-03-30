@@ -19,7 +19,7 @@ def main() :
 
     for i in range(len(tmr.tcmMethods) - 1) :
         method = tmr.tcmMethods[i]
-        print(str(i) + ” : ” + method.code)
+        print(str(i) + " : " + method.code)
 
-if __name__ == ‘__main__’ :
+if __name__ == '__main__' :
     main()
