@@ -6,7 +6,7 @@
 1. (host)$ cd [root directory of this project]
 2. (host)$ docker build -t tcm ./
 3. (host)$ docker run -it --rm tcm
-4. (container)$ "Download the project that you want to analyze"
+4. "Download the project that you want to analyze on the docker container"
 5. (container)$ python3 tcs/main.py [root directory of target project's directory] 
 
 <!--
