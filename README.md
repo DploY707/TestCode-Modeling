@@ -1,6 +1,6 @@
 # TestCode-Modeling
 * Project for [testCode-Modeling] software
-* <em>For now we support only python project<em>
+* For now we support only python project
 
 # How to install this project
 1. (host)$ cd [root directory of this project]
