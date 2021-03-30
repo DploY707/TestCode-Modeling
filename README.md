@@ -6,6 +6,7 @@ Project for [testCode-Modeling] software
 2. $ docker build -t tcm ./
 
 (on the container)
+
 3. $ python3 tcs/main.py [root directory of target project's directory]
 
 <!--
