@@ -13,9 +13,12 @@ ENV LC_ALL C.UTF-8
 ENV LANG C.UTF-8
 
 
-# Set projects directories
+# Set projects files to docker container 
 USER root
 WORKDIR /root
-# RUN \
+COPY ./tcm /root/tcm/
+
+# Set sample dataSet of this project
+RUN git clone https://github.com/ros/ros_tutorials.git
 
 # CMD ["python3","main.py"]
