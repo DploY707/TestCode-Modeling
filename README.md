@@ -3,9 +3,11 @@
 * <em>For now we support only python project<em>
 
 # How to install this project
-1. $ cd [root directory of this project]
-2. $ docker build -t tcm ./
-3. (on the container)$ python3 tcs/main.py [root directory of target project's directory] 
+1. (host)$ cd [root directory of this project]
+2. (host)$ docker build -t tcm ./
+3. (host)$ docker run -it --rm tcm
+4. (container)$ "Download the project that you want to analyze"
+5. (container)$ python3 tcs/main.py [root directory of target project's directory] 
 
 <!--
 # How to Use it
