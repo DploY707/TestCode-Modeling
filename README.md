@@ -5,6 +5,9 @@ Project for [testCode-Modeling] software
 1. $ cd [root directory of this project]
 2. $ docker build -t tcm ./
 
+(on the container)
+3. $ python3 tcs/main.py [root directory of target project's directory]
+
 <!--
 # How to Use it
 1. Move your APK that want you to analyze to [./data] directory
