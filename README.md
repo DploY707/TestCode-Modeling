@@ -1,13 +1,12 @@
 # TestCode-Modeling
 Project for [testCode-Modeling] software
 
+* For now we support only python project
+
 # How to install this project
 1. $ cd [root directory of this project]
 2. $ docker build -t tcm ./
-
-(on the container)
-
-3. $ python3 tcs/main.py [root directory of target project's directory]
+3. (on the container)$ python3 tcs/main.py [root directory of target project's directory] 
 
 <!--
 # How to Use it
