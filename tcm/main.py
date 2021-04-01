@@ -30,49 +30,82 @@ def spawn() :
     # TODO : make logo to spawn
     print(logo)
 
-def print_menu() :
-    menu_str = ""
-
-    menu_str += "[1] : print test cases from the target project\n"
-    menu_str += "[q] : quit this program\n"
-
-    print(menu_str)
-
 def get_command() :
     cmd = input(colors.BRIGHT_YELLOW + '$: ' + colors.END)
     print('')
 
     return cmd
 
+def print_input_error_msg() :
+    print(colors.RED + 'Invalid task ... , Please check your cmd\n' + colors.END)
+
+def print_user_manual(phase) :
+    print("")
+
+    if phase == 0 :
+        print("  [1] : print test cases from the target project")
+        print("  [q] : quit this program\n")
+    elif phase == 1 :
+        print("  [1...N] : select the case No. that want to analyze")
+        print("  [q] : go to previous phase\n")
+    elif phase == 2 :
+        print("  [bt] : back trace selected testCase")
+        print("  [q] : go to previous phase\n")
+    else :
+        print("")
+
+
 def run_cli_interface(model) :
     while True :
-        print_menu()
+        print_user_manual(0)
+        cmd = get_command()
 
-        task = get_command()
-
-        if task == '1' :
-            while True :
-                model.show()
-                
-                print('\n=========================================================')
-                print('    You can choose the CASE No. that you want to test')
-                print('    If you want to go back just use \'q\' cmd')
-                print('=========================================================\n')
-
-                sub_task = get_command()
-            
-                if sub_task.isdigit() and int(sub_task) in range(len(model.tcmCaseList)) :
-                    print(str(model.tcmCaseList[int(sub_task)]) + '\n')
-                elif sub_task == 'q':
-                    break
-                else :
-                    print(colors.RED + 'Invalid task ... , Please check your cmd\n' + colors.END)
-
-        elif task == 'q' :
+        if cmd == '1' :
+            run_phase1_modelView(model)
+        elif cmd == 'q' :
             break
         else :
-            print(colors.RED + 'Invalid task ... , Please check your cmd\n' + colors.END)
+            print_input_error_msg()
 
+def run_phase1_modelView(model) :
+    while True :
+        model.show()
+
+        print_user_manual(1)
+        cmd = get_command()
+
+        if cmd.isdigit() and int(cmd) in range(len(model.tcmCaseList)) :
+            run_phase2_caseView(model.tcmCaseList[int(cmd)])
+        elif cmd == 'q' :
+            break
+        else :
+            print_input_error_msg()
+
+def run_phase2_caseView(case) :
+    while True :
+        print(case)
+
+        print_user_manual(2)
+        cmd = get_command()
+
+        if cmd == 'bt' :
+            run_phase3_traceView()
+        elif cmd == 'q' :
+            break
+        else :
+            print_input_error_msg()
+
+def run_phase3_traceView() :
+    print('Back Tracing . . . \n')
+
+    while True :
+        cmd = get_command()
+
+        if cmd == 'q' :
+            break
+        else :
+            print_input_error_msg()
+        
 if __name__ == '__main__' :
     spawn()
 
