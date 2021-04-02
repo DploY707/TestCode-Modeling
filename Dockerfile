@@ -21,4 +21,4 @@ COPY ./tcm /root/tcm/
 # Set sample dataSet of this project
 RUN git clone https://github.com/ros/ros_tutorials.git
 
-# CMD ["python3","main.py"]
+# CMD ["python3","tcm/main.py", "./ros_tutorials/"]
