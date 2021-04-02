@@ -14,7 +14,7 @@ def initialize(target_project) :
         tp.read_file()
         tp.generate_tcmMethod_from_pyFile()
 
-        tmr.add_tcmMethods(tp.tcmMethods)
+        tmr.add_tcmMethods(tp.get_methods())
 
     for i in range(len(tmr.tcmMethods) - 1) :
         method = tmr.tcmMethods[i]
@@ -49,7 +49,7 @@ def print_user_manual(phase) :
         print("  [1...N] : select the case No. that want to analyze")
         print("  [q] : go to previous phase\n")
     elif phase == 2 :
-        print("  [bt] : back trace selected testCase")
+        print("  [r] : back trace selected testCase")
         print("  [q] : go to previous phase\n")
     else :
         print("")
@@ -88,15 +88,18 @@ def run_phase2_caseView(case) :
         print_user_manual(2)
         cmd = get_command()
 
-        if cmd == 'bt' :
-            run_phase3_traceView()
+        if cmd == 'r' :
+            run_phase3_traceView(case)
         elif cmd == 'q' :
             break
         else :
             print_input_error_msg()
 
-def run_phase3_traceView() :
-    print('Back Tracing . . . \n')
+def run_phase3_traceView(case) :
+    print('Reporting . . . \n')
+
+    for target in case.targetList :
+        print(target)
 
     while True :
         cmd = get_command()

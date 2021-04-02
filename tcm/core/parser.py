@@ -25,11 +25,23 @@ class tcmParser() :
     def __init__(self, pyFile) :
         self.file = pyFile
         self.contents = None
-        self.tcmMethods = list()
+        self.tcmDepedencyList = list()
+        self.tcmMethodList = list()
+        self.tcmClassList = list()
 
     def read_file(self) :
         py = open(self.file, 'r')
         self.contents = py.readlines()
+
+    # TODO : Implement Functions related to tcmDependency
+    def generate_tcmDependency_from_pyFile(self) :
+        source = ''
+        element = ''
+        alias = ''
+
+    # TODO : Implement Functions related to tcmDependency
+    def get_dependencies(self) :
+        return self.tcmDependencyList
 
     def generate_tcmMethod_from_pyFile(self) :
         code = ""
@@ -42,7 +54,7 @@ class tcmParser() :
                 indent = line.split('def ')[0]
 
                 if code :
-                    self.tcmMethods.append(tcmMethod(self.file, code))
+                    self.tcmMethodList.append(tcmMethod(self.file, code))
                     code = ""
                     indent = ""
 
@@ -51,7 +63,7 @@ class tcmParser() :
                 indent = ""
 
                 if code :
-                    self.tcmMethods.append(tcmMethod(self.file, code))
+                    self.tcmMethodList.append(tcmMethod(self.file, code))
                     code = ""
                     indent = ""
 
@@ -62,7 +74,18 @@ class tcmParser() :
                     code += line
         
         if code :
-            self.tcmMethods.append(tcmMethod(self.file, code))
+            self.tcmMethodList.append(tcmMethod(self.file, code))
+
+    def get_methods(self) :
+        return self.tcmMethodList
+
+    # TODO : Implement Functions related to tcmClass
+    def generate_tcmClass_from_pyFile(self) :
+        pass
+
+    # TODO : Implement Functions related to tcmClass
+    def get_classes(self) :
+        return self.tcmClassList
 
 class tcmMethod :
     # TODO : have to remove the overlapping codes
@@ -73,7 +96,6 @@ class tcmMethod :
         self.name = None
         self.args = list()
         self.comments = list()
-        self.description = ""
 
     def set_name(self) :
         funcProto = self.code[0]
@@ -115,14 +137,17 @@ class tcmMethod :
         meth_info += 'file : ' + self.file + '\n'
         meth_info += 'name : ' + self.name + '\n'
         meth_info += 'args : ' + ' '.join(self.args) + '\n'
-        meth_info += 'description : ' + self.description + '\n'
 
         if not self.comments :
             meth_info += "comments : -NULL-\n"
         else :
-            meth_info += '\n[comments]\n' + '\n'.join(self.comments) + '\n'
+            meth_info += '\n[comments]\n' + '\n'.join(self.comments).replace('  ','') + '\n'
 
-        meth_info += '\n[code]\n' + '\n'.join(    self.code) + '\n'
+        meth_info += '\n[code]\n\n'
+
+        for i, line in enumerate(self.code) :
+            meth_info += colors.BRIGHT_YELLOW + str(i).zfill(2) + colors.END + '  ' + line + '\n'
+
         meth_info += '===================================================================================================='
 
         return meth_info
@@ -130,11 +155,20 @@ class tcmMethod :
     def __str__(self) :
         return self.__repr__()
 
-# TODO : have to implement to manage class info & dependencies between .py files and classes
+class tcmDependency :
+    def __init__(self, pyFile) :
+        self.file = pyFile
+        self.source = ''
+        self.element = ''
+        self.alias = ''
+
+    def set_dep(self, source, element, alias) :
+        self.source = source
+        self.element = element
+        self.alias = alias
+
+# TODO : Implement tcmClass to manage classes in .py file
 class tcmClass :
     def __init__(self) :
-        pass
-
-class tcmDependency :
-    def __init__(self) :
-        pass
+        self.fieldList = list()
+        self.funcList = list()
