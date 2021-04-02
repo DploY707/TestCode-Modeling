@@ -1,3 +1,5 @@
+from utils.color import colors
+
 class tcmModel :
     def __init__(self, testCases) :
         self.tcmCaseList = testCases
@@ -10,6 +12,10 @@ class tcmModeler :
     def __init__(self) :
         self.tcmMethods = list()
         self.tcmCases = list()
+        self.banFilter = list()
+
+        self.banFilter.append(' (')
+        self.banFilter.append('print(')
 
     def add_tcmMethods(self, tmList) :
         self.tcmMethods += tmList
@@ -24,6 +30,8 @@ class tcmModeler :
 
                 tc.set_name()
                 tc.set_description()
+
+                tc.set_targetList(self.find_test_target(tc))
 
                 self.tcmCases.append(tc)
 
@@ -50,6 +58,27 @@ class tcmModeler :
                         if method.name == callList[0].split('(')[0].split(' ')[-1] :
                             testCase.set_entrypoint(method)
 
+    def find_test_target(self, testCase) :
+        codes = testCase.entrypoint.code
+        
+        targetList = list()
+
+        for i, line in enumerate(codes) :
+            # This condition is only for ROS
+            if i == 0 :
+                pass
+            else :
+                if '(' in line :
+                    niLine = line.replace('  ','')
+
+                    if ' (' in niLine or 'print(' in niLine or list(niLine)[0] == '#' or '()' in niLine :
+                        pass
+                    else :
+                        target = 'line ' + str(i).zfill(2) + ' : ' + niLine
+                        targetList.append(target)
+
+        return targetList
+
 class tcmCase :
     def __init__(self) :
         self.entrypoint = None
@@ -75,13 +104,16 @@ class tcmCase :
             if "## " in line :
                 self.description += line.split('## ')[1].replace('\n', '').replace('. ', '.\n')
 
+    def set_targetList(self, targetList) :
+        self.targetList = targetList
+
     def __repr__(self) :
         case_info = ""
 
-        case_info += 'CASE NAME : ' + self.name + '\n'
+        case_info += colors.BRIGHT_GREEN + 'CASE NAME : ' + self.name + '\n' + colors.END
         
         if self.description :
-            case_info += 'Description : ' + self.description + '\n'
+            case_info += colors.BRIGHT_GREEN + 'Description : ' + self.description + '\n' + colors.END
         else :
             case_info += 'Description : -NULL-\n'
 

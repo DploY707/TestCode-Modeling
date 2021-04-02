@@ -46,10 +46,12 @@ def print_user_manual(phase) :
         print("  [1] : print test cases from the target project")
         print("  [q] : quit this program\n")
     elif phase == 1 :
-        print("  [1...N] : select the case No. that want to analyze")
+        print("  [1...N] : show more detailed info about the test case")
         print("  [q] : go to previous phase\n")
     elif phase == 2 :
-        print("  [r] : back trace selected testCase")
+        print("  [l] : show the detailed target of the test case")
+        print("  [q] : go to previous phase\n")
+    elif phase == 3 :
         print("  [q] : go to previous phase\n")
     else :
         print("")
@@ -88,26 +90,31 @@ def run_phase2_caseView(case) :
         print_user_manual(2)
         cmd = get_command()
 
-        if cmd == 'r' :
-            run_phase3_traceView(case)
+        if cmd == 'l' :
+            if run_phase3_traceView(case) :
+                break
         elif cmd == 'q' :
             break
         else :
             print_input_error_msg()
 
 def run_phase3_traceView(case) :
-    print('Reporting . . . \n')
+    print(colors.BRIGHT_BLUE + 'You can change the [Params] shown below for test\n' + colors.END)
 
     for target in case.targetList :
         print(target)
+
+    print_user_manual(3)
 
     while True :
         cmd = get_command()
 
         if cmd == 'q' :
-            break
+            return True
         else :
             print_input_error_msg()
+
+    return False
         
 if __name__ == '__main__' :
     spawn()
