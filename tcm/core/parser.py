@@ -41,7 +41,7 @@ class tcmParser() :
                 methodFlag = True
                 indent = line.split('def ')[0]
 
-                if code != "" :
+                if code :
                     self.tcmMethods.append(tcmMethod(self.file, code))
                     code = ""
                     indent = ""
@@ -50,7 +50,7 @@ class tcmParser() :
                 methodFlag = True
                 indent = ""
 
-                if code != "" :
+                if code :
                     self.tcmMethods.append(tcmMethod(self.file, code))
                     code = ""
                     indent = ""
@@ -61,7 +61,8 @@ class tcmParser() :
                 else :
                     code += line
         
-        self.tcmMethods.append(tcmMethod(self.file, code))
+        if code :
+            self.tcmMethods.append(tcmMethod(self.file, code))
 
 class tcmMethod :
     # TODO : have to remove the overlapping codes
